@@ -154,24 +154,24 @@ class FlLine {
 /// return null if you don't want to show each item
 /// if user touched the chart, we show a tooltip window on the most top [TouchSpot],
 /// here we get the [TooltipItem] from the given [TouchedSpot].
-typedef GetTooltipItems<T extends TouchedSpot> = List<TooltipItem> Function(
+typedef GetTooltipItems<T extends FlSpot> = List<TooltipItem> Function(
     List<T> touchedSpots);
 
-List<TooltipItem> defaultTitlesStyle<T extends TouchedSpot>(
+List<TooltipItem> defaultTitlesStyle<T extends FlSpot>(
     List<T> touchedSpots) {
   if (touchedSpots == null) {
     return null;
   }
 
   return touchedSpots.map((T touchedSpot) {
-    if (touchedSpots == null || touchedSpot.spot == null) {
+    if (touchedSpots == null) {
       return null;
     }
 
-    final String text = touchedSpot.spot.y.toString();
+    final String text = touchedSpot.y.toString();
 
     final TextStyle textStyle = TextStyle(
-      color: touchedSpot.getColor(),
+      color: Colors.green,
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );

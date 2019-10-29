@@ -135,7 +135,7 @@ class BarChartSample2State extends State<BarChartSample2> {
                         touchTooltipData: TouchTooltipData(
                             tooltipBgColor: Colors.grey,
                             getTooltipItems: (spots) {
-                              return spots.map((TouchedSpot spot) {
+                              return spots.map((FlSpot spot) {
                                 return null;
                               }).toList();
                             }),

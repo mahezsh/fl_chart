@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:fl_chart/src/chart/bar_chart/bar_chart_painter.dart';
 import 'package:fl_chart/src/chart/line_chart/line_chart_painter.dart';
 import 'package:fl_chart/src/chart/pie_chart/pie_chart_painter.dart';
@@ -21,17 +19,10 @@ abstract class BaseChartPainter<D extends BaseChartData> extends CustomPainter {
   final D targetData;
   Paint borderPaint;
 
-  /// receive the touch input events through this notifier
-  FlTouchInputNotifier touchInputNotifier;
-
-  /// responds the touch result through this sink,
-  /// in form of a [BaseTouchResponse]
-  StreamSink<BaseTouchResponse> touchedResponseSink;
-
-  BaseChartPainter(this.data, this.targetData,
-      {this.touchInputNotifier, this.touchedResponseSink})
-      : super(repaint: data.touchData.enabled ? touchInputNotifier : null) {
-    borderPaint = Paint()..style = PaintingStyle.stroke;
+  BaseChartPainter(this.data, this.targetData)
+    : super() {
+    borderPaint = Paint()
+      ..style = PaintingStyle.stroke;
   }
 
   @override
@@ -109,22 +100,30 @@ abstract class BaseChartPainter<D extends BaseChartData> extends CustomPainter {
   /// checks that the touchInput is eligible to draw,
   /// and child painters can use this function to check then draw their default touch behaviors.
   bool shouldDrawTouch() {
-    if (touchInputNotifier == null ||
-        touchInputNotifier.value == null ||
-        shouldDrawTouch == null) {
-      return false;
-    }
-
-    if (touchInputNotifier.value is FlLongPressEnd ||
-        touchInputNotifier.value is FlPanEnd) {
-      return false;
-    }
-
-    if (touchInputNotifier.value is FlTouchNormalInput &&
-        !data.touchData.enableNormalTouch) {
-      return false;
-    }
-
-    return true;
+    return false;
+//    if (touchInputNotifier == null ||
+//        touchInputNotifier.value == null ||
+//        shouldDrawTouch == null) {
+//      return false;
+//    }
+//
+//    if (touchInputNotifier.value is FlLongPressEnd ||
+//        touchInputNotifier.value is FlPanEnd) {
+//      return false;
+//    }
+//
+//    if (touchInputNotifier.value is FlTouchNormalInput &&
+//        !data.touchData.enableNormalTouch) {
+//      return false;
+//    }
+//
+//    return true;
   }
+}
+
+//typedef TouchHandler = BaseTouchResponse Function(FlTouchInput touchInput);
+
+mixin TouchHandler {
+  BaseTouchResponse handleTouch(FlTouchInput touchInput, Size size,) =>
+    throw UnsupportedError('not implemented');
 }

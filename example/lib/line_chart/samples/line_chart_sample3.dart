@@ -44,9 +44,10 @@ class LineChartSample3 extends StatelessWidget {
           child: LineChart(
             LineChartData(
               lineTouchData: LineTouchData(
-                  getTouchedSpotIndicator: (List<TouchedSpot> spots) {
-                    return spots.map((spot) {
-                      if (spot.spot.x == 0 || spot.spot.x == 6) {
+                  getTouchedSpotIndicator: (LineChartBarData barData, List<int> spotIndexes) {
+                    return spotIndexes.map((spotIndex) {
+                      final FlSpot spot = barData.spots[spotIndex];
+                      if (spot.x == 0 || spot.x == 6) {
                         return null;
                       }
                       return TouchedSpotIndicatorData(
@@ -57,9 +58,8 @@ class LineChartSample3 extends StatelessWidget {
                   },
                   touchTooltipData: TouchTooltipData(
                       tooltipBgColor: Colors.blueAccent,
-                      getTooltipItems: (List<TouchedSpot> spots) {
-                        return spots.map((spot) {
-                          final flSpot = spot.spot;
+                      getTooltipItems: (List<FlSpot> spots) {
+                        return spots.map((flSpot) {
                           if (flSpot.x == 0 || flSpot.x == 6) {
                             return null;
                           }

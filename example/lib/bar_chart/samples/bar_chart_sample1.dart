@@ -189,7 +189,7 @@ class BarChartSample1State extends State<BarChartSample1> {
             getTooltipItems: (touchedSpots) {
               return touchedSpots.map((touchedSpot) {
                 String weekDay;
-                switch (touchedSpot.spot.x.toInt()) {
+                switch (touchedSpot.x.toInt()) {
                   case 0:
                     weekDay = 'Monday';
                     break;
@@ -213,7 +213,7 @@ class BarChartSample1State extends State<BarChartSample1> {
                     break;
                 }
                 return TooltipItem(
-                    weekDay + '\n' + (touchedSpot.spot.y - 1).toString(),
+                    weekDay + '\n' + (touchedSpot.y - 1).toString(),
                     TextStyle(color: Colors.yellow));
               }).toList();
             }),

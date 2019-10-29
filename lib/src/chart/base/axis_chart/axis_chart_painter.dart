@@ -1,9 +1,5 @@
-import 'dart:async';
-
 import 'package:fl_chart/src/chart/bar_chart/bar_chart_painter.dart';
-import 'package:fl_chart/src/chart/base/base_chart/base_chart_data.dart';
 import 'package:fl_chart/src/chart/base/base_chart/base_chart_painter.dart';
-import 'package:fl_chart/src/chart/base/base_chart/touch_input.dart';
 import 'package:fl_chart/src/chart/line_chart/line_chart_painter.dart';
 import 'package:flutter/material.dart';
 
@@ -17,10 +13,8 @@ import 'axis_chart_data.dart';
 abstract class AxisChartPainter<D extends AxisChartData> extends BaseChartPainter<D> {
   Paint gridPaint, backgroundPaint, bgTouchTooltipPaint;
 
-  AxisChartPainter(D data, D targetData,
-      {FlTouchInputNotifier touchInputNotifier, StreamSink<BaseTouchResponse> touchedResponseSink})
-      : super(data, targetData,
-            touchInputNotifier: touchInputNotifier, touchedResponseSink: touchedResponseSink) {
+  AxisChartPainter(D data, D targetData,)
+      : super(data, targetData,) {
     gridPaint = Paint()..style = PaintingStyle.fill;
 
     backgroundPaint = Paint()..style = PaintingStyle.fill;
@@ -112,23 +106,22 @@ abstract class AxisChartPainter<D extends AxisChartData> extends BaseChartPainte
     );
   }
 
-  void drawTouchTooltip(
-      Canvas canvas, Size viewSize, TouchTooltipData tooltipData, List<TouchedSpot> touchedSpots) {
-    if (!shouldDrawTouch()) {
-      return;
-    }
+  void drawTouchTooltip(Canvas canvas, Size viewSize, TouchTooltipData tooltipData,
+    FlSpot showOnSpot, MapEntry<int, List<FlSpot>> showingTooltipSpots) {
+
+    final Size chartUsableSize = getChartUsableDrawSize(viewSize);
 
     const double textsBelowMargin = 4;
 
     /// creating TextPainters to calculate the width and height of the tooltip
     final List<TextPainter> drawingTextPainters = [];
 
-    final List<TooltipItem> tooltipItems = tooltipData.getTooltipItems(touchedSpots);
-    if (tooltipItems.length != touchedSpots.length) {
+    final List<TooltipItem> tooltipItems = tooltipData.getTooltipItems(showingTooltipSpots.value);
+    if (tooltipItems.length != showingTooltipSpots.value.length) {
       throw Exception('tooltipItems and touchedSpots size should be same');
     }
 
-    for (int i = 0; i < touchedSpots.length; i++) {
+    for (int i = 0; i < showingTooltipSpots.value.length; i++) {
       final TooltipItem tooltipItem = tooltipItems[i];
       if (tooltipItem == null) {
         continue;
@@ -164,7 +157,10 @@ abstract class AxisChartPainter<D extends AxisChartData> extends BaseChartPainte
     /// if we have multiple bar lines,
     /// there are more than one FlCandidate on touch area,
     /// we should get the most top FlSpot Offset to draw the tooltip on top of it
-    final Offset mostTopOffset = touchedSpots.first.offset;
+    final Offset mostTopOffset = Offset(
+      getPixelX(showOnSpot.x, chartUsableSize),
+      getPixelY(showOnSpot.y, chartUsableSize),
+    );
 
     final double tooltipWidth = biggerWidth + tooltipData.tooltipPadding.horizontal;
     final double tooltipHeight = sumTextsHeight + tooltipData.tooltipPadding.vertical;

@@ -105,7 +105,11 @@ class LineChartSample1State extends State<LineChartSample1> {
           touchResponseSink: controller.sink,
           touchTooltipData: TouchTooltipData(
             tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
-          )),
+          ),
+        touchCallback: (LineTouchResponse touchResponse) {
+          print(touchResponse);
+        }
+      ),
       gridData: const FlGridData(
         show: false,
       ),
@@ -181,73 +185,76 @@ class LineChartSample1State extends State<LineChartSample1> {
   }
 
   List<LineChartBarData> linesBarData1() {
+    LineChartBarData lineChartBarData1 = LineChartBarData(
+      spots: const [
+        FlSpot(1, 1),
+        FlSpot(3, 1.5),
+        FlSpot(5, 1.4),
+        FlSpot(7, 3.4),
+        FlSpot(10, 2),
+        FlSpot(12, 2.2),
+        FlSpot(13, 1.8),
+      ],
+      isCurved: true,
+      colors: const [
+        Color(0xff4af699),
+      ],
+      barWidth: 8,
+      isStrokeCapRound: true,
+      dotData: FlDotData(
+        show: false,
+      ),
+      belowBarData: BarAreaData(
+        show: false,
+      ),
+    );
+    LineChartBarData lineChartBarData2 = LineChartBarData(
+      spots: [
+        FlSpot(1, 1),
+        FlSpot(3, 2.8),
+        FlSpot(7, 1.2),
+        FlSpot(10, 2.8),
+        FlSpot(12, 2.6),
+        FlSpot(13, 3.9),
+      ],
+      isCurved: true,
+      colors: [
+        Color(0xffaa4cfc),
+      ],
+      barWidth: 8,
+      isStrokeCapRound: true,
+      dotData: FlDotData(
+        show: false,
+      ),
+      belowBarData: BarAreaData(show: false, colors: [
+        Color(0x00aa4cfc),
+      ]),
+    );
+    LineChartBarData lineChartBarData3 = LineChartBarData(
+      spots: const [
+        FlSpot(1, 2.8),
+        FlSpot(3, 1.9),
+        FlSpot(6, 3),
+        FlSpot(10, 1.3),
+        FlSpot(13, 2.5),
+      ],
+      isCurved: true,
+      colors: const [
+        Color(0xff27b6fc),
+      ],
+      barWidth: 8,
+      isStrokeCapRound: true,
+      dotData: const FlDotData(
+        show: false,
+      ),
+      belowBarData: const BarAreaData(
+        show: false,
+      ),
+    );
     return [
-      const LineChartBarData(
-        spots: [
-          FlSpot(1, 1),
-          FlSpot(3, 1.5),
-          FlSpot(5, 1.4),
-          FlSpot(7, 3.4),
-          FlSpot(10, 2),
-          FlSpot(12, 2.2),
-          FlSpot(13, 1.8),
-        ],
-        isCurved: true,
-        colors: [
-          Color(0xff4af699),
-        ],
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: false,
-        ),
-      ),
-      const LineChartBarData(
-        spots: [
-          FlSpot(1, 1),
-          FlSpot(3, 2.8),
-          FlSpot(7, 1.2),
-          FlSpot(10, 2.8),
-          FlSpot(12, 2.6),
-          FlSpot(13, 3.9),
-        ],
-        isCurved: true,
-        colors: [
-          Color(0xffaa4cfc),
-        ],
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(show: false, colors: [
-          Color(0x00aa4cfc),
-        ]),
-      ),
-      const LineChartBarData(
-        spots: [
-          FlSpot(1, 2.8),
-          FlSpot(3, 1.9),
-          FlSpot(6, 3),
-          FlSpot(10, 1.3),
-          FlSpot(13, 2.5),
-        ],
-        isCurved: true,
-        colors: [
-          Color(0xff27b6fc),
-        ],
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: false,
-        ),
-      ),
+      lineChartBarData1,
+      lineChartBarData2,
+      lineChartBarData3,
     ];
   }
 
